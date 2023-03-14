@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nsh-api
+  namespace: nsh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: nsh-api
+  template:
+    metadata:
+      labels:
+        component: nsh-api
+    spec:
+      containers:
+        - name: nsh-api
+          image: ghcr.io/nikodem-wrona/nsh/nsh-api:latest
+          imagePullPolicy: Always
+          env:
+            - name: NODE_ENV
+              value: "prod"
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: nsh-api-config-map
+                  key: PORT
+            - name: DATABASE_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: nsh-api-config-map
+                    key: DATABASE_URL
+          ports:
+            - containerPort: 3003

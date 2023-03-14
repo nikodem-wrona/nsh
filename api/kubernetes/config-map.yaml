@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nsh-api-config-map
+  namespace: nsh
+data:
+  PORT: "3003"
+  DATABASE_URL: ""
+  OPEN_AI_API_KEY: ""
