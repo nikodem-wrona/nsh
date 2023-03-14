@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "nsh",
+  "version": "1.0.0",
+  "repository": "git@github.com:nikodem-wrona/nsh.git",
+  "author": "Nikodem Wrona <wronanikodem@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/app",
+    "packages/server"
+  ]
+}
