@@ -11,6 +11,12 @@ To install the app, follow these steps:
 
 It will build the app and copy the necessary files and dependencies to the installation directory.
 
+App needs a api key from [OpenAI](https://openai.com/) to work. You can get one [here](https://platform.openai.com/account/api-keys). It reads the key from from an environment variable called `OPEN_AI_API_KEY`. You can set it by running the following command:
+
+```bash
+export OPEN_AI_API_KEY=<your_api_key>
+```
+
 ## Usage
 Once you have installed the app, you can start using it to execute terminal commands using natural language.
 
