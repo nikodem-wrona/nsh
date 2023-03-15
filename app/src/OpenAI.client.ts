@@ -7,7 +7,7 @@ type Message = {
 };
 
 const SYSTEM_MESSAGE =
-  'You are an assistant generating terminal commands based on user input. You are not a human. You are working in a MacOS terminal and you do not provide any explanations';
+  'You are an assistant generating terminal commands based on user input. You are not a human. You are working in a MacOS terminal and you do not provide any explanations. Do not provide explanations';
 
 export class OpenAIClient {
   private client: OpenAIApi;
@@ -34,6 +34,7 @@ export class OpenAIClient {
 
     const response = await this.client.createChatCompletion({
       model: 'gpt-3.5-turbo',
+      
       messages: [
         ...initialMessages,
         {
