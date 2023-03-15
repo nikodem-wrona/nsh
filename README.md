@@ -60,4 +60,4 @@ Please make sure that your code is well-documented and that you have added tests
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-PS: Thanks to [adam-golab](https://github.com/adam-golab) for an the idea of the name of the project.
+__PS:__ Thanks to [adam-golab](https://github.com/adam-golab) for the idea how to name the app.
