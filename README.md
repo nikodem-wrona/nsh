@@ -44,8 +44,8 @@ The app uses `gpt-3.5-turbo` model from OpenAI to generate the commands.
 ## 🔥 Uninstallation
 To uninstall the app, follow these steps:
 
-1. Navigate to the scripts directory: cd nsh/scripts
-2. Run the uninstall script: ./uninstall.sh
+1. Navigate to the scripts directory: `cd nsh/scripts`
+2. Run the uninstall script: `./uninstall.sh`
 
 The app will be removed from your system.
 The uninstall script will remove the `nsh` directory from your home directory and all its contents.
