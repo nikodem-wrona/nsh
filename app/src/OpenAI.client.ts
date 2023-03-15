@@ -1,53 +1,52 @@
-import { HttpClient } from './Http.client';
+import { Configuration, OpenAIApi } from 'openai';
 import { removeCharsFromString } from './utils';
 
-type Choice = {
-  message: {
-    content: string;
-  }
-}
+type Message = {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+};
 
-type OpenApiResponse = {
-  choices: Choice[]
-}
-
-type OpenApiPayload = {
-  command: string;
-}
+const SYSTEM_MESSAGE =
+  'You are an assistant generating terminal commands based on user input. You are not a human. You are working in a MacOS terminal and you do not provide any explanations';
 
 export class OpenAIClient {
-  private httpClient: HttpClient;
+  private client: OpenAIApi;
 
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
+  constructor(apiKey: string) {
+    const config = new Configuration({
+      apiKey,
+    });
+
+    this.client = new OpenAIApi(config);
   }
 
   private ParseCommand(rawCommand: string): string {
     return removeCharsFromString(rawCommand, ['"', '`']);
   }
+  
+  async GenerateCommand(input: string): Promise<any> {
+    const initialMessages: Message[] = [
+      {
+        role: 'system',
+        content: SYSTEM_MESSAGE,
+      },
+    ];
 
-  public async GenerateCommand(input: string): Promise<string> {
-    const payload: OpenApiPayload = {
-      command: input,
-    }
+    const response = await this.client.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        ...initialMessages,
+        {
+          role: 'user',
+          content: input,
+        },
+      ],
+    });
 
-    const response = await this.httpClient.Post<OpenApiResponse, OpenApiPayload>(payload);
-
-    if (response === null) {
-      console.error('Response was null');
-      return '';
-    }
-
-    const { choices } = response;
-
-    if (choices.length === 0) {
-      console.error('Choices array was empty');
-      return '';
-    }
-    
+    const { choices } = response.data;
     const { message } = choices[0];
 
-    if (message === null) {
+    if (!message) {
       console.error('Message was null');
       return '';
     }

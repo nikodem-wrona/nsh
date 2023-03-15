@@ -1,5 +1,4 @@
 import { CommandExecutor } from './CommandExecutor';
-import { HttpClient } from './Http.client';
 import { OpenAIClient } from './OpenAI.client';
 import { displayWelcomeMessage } from './utils';
 
@@ -9,14 +8,9 @@ class App {
     async run() {
       displayWelcomeMessage();
       
-      const url = process.env.NSH_API_URL || '';
-      const authToken = process.env.NSH_AUTH_TOKEN || '';
+      const apiKey = process.env.OPEN_AI_API_KEY || '';
 
-      const httpClient = new HttpClient(url, {
-        'Authorization': `Bearer ${authToken}`,
-      });
-
-      const openAIClient = new OpenAIClient(httpClient);
+      const openAIClient = new OpenAIClient(apiKey);
       const commandExecutor = new CommandExecutor(openAIClient);
 
       await commandExecutor.Start();
