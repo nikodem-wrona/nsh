@@ -37,6 +37,8 @@ Here are some examples of the types of commands you can execute:
 - Move the file 'myfile.txt' to the directory 'mydir'
 - Rename the file 'oldname.txt' to 'newname.txt'
 
+❗❗❗ __CAUTION:__ Commands are automatically executed without any confirmation. Use it carefully.
+
 The app uses `gpt-3.5-turbo` model from OpenAI to generate the commands.
 
 ## Uninstallation
