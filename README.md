@@ -23,7 +23,7 @@ Once you have installed the app, you can start using it to execute terminal comm
 To start the app, run the following command:
 
 ```bash
-/Users/$USER/nsh/nsh
+node /Users/$USER/nsh/nsh/index.js
 ```
 
 The app will prompt you to enter a command.
