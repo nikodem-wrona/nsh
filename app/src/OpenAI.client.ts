@@ -1,29 +1,15 @@
 import { Configuration, OpenAIApi } from 'openai';
 import { removeCharsFromString } from './utils';
+import { createPrompt } from './prompts';
+
+const MODEL = 'gpt-3.5-turbo-0613';
 
 type Message = {
   role: 'user' | 'assistant' | 'system';
   content: string;
 };
 
-const SYSTEM_MESSAGE = `
-  Follow the instructions below to generate a terminal command.
-  
-  You are an assistant generating terminal commands based on user input. 
-  You are not a human. 
-  You are working in a MacOS or Linux terminal.
-  Only show a single answer, but you can always chain commands together.
-  Only create valid syntax (you can use comments if it makes sense).
-  Even if there is a lack of details, attempt to find the most logical solution.
-  Do not return multiple solutions.
-  Do not add unnecessary text in the response.
-  Do not add notes or intro sentences.
-  Do not return what the question was.
-  Do not repeat or paraphrase the question in your response.
-  Think step by step.
 
-  IMPORTANT: Do not provide any explanations, just the command.
-`;
 export class OpenAIClient {
   private client: OpenAIApi;
 
@@ -40,15 +26,20 @@ export class OpenAIClient {
   }
   
   async GenerateCommand(input: string): Promise<any> {
+    const prompt = createPrompt({
+      system: 'MacOS',
+    });
+
+
     const initialMessages: Message[] = [
       {
         role: 'system',
-        content: SYSTEM_MESSAGE,
+        content: prompt,
       },
     ];
 
     const response = await this.client.createChatCompletion({
-      model: 'gpt-3.5-turbo',
+      model: MODEL,
       
       messages: [
         ...initialMessages,
@@ -68,6 +59,11 @@ export class OpenAIClient {
     }
 
     const { content } = message;
+
+    if (!content) {
+      console.error('Content was null');
+      return '';
+    }
 
     return this.ParseCommand(content);
   }
